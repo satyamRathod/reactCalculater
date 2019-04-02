@@ -28,9 +28,32 @@ class Home extends Component {
   };
 
   handleClick = e => {
-    const result = eval(this.state.result);
+    const result = this.state.result;
+    const numList = result.split(/[*/+-]+/).map(e=>parseInt(e));
+    console.log(numList);
+    const operators = result.split(/[\d]+/);
+    operators.pop();
+    operators.shift();
+    let result1 = numList[0];
+    for (let i = 0; i < operators.length; i++) {
+      // eslint-disable-next-line default-case
+      switch (operators[i]) {
+        case "+":
+          result1 = result1 + numList[i + 1];
+          break;
+        case "*":
+          result1 = result1 * numList[i + 1];
+          break;
+        case "/":
+          result1 = result1 / numList[i + 1];
+          break;
+        case "-":
+          result1 = result1 - numList[i + 1];
+          break;
+      }
+    }
     this.setState({
-      result: result
+      result: result1
     });
   };
   handleButtonKey = num => {
@@ -47,12 +70,12 @@ class Home extends Component {
           <Card style={{ backgroundColor: "#ccc", height: "350px" }}>
             <Card.Body>
               <Row>
-              <input
-                type="text"
-                onChange={this.handleChange}
-                value={result}
-                style={{ width: "100%", height: "100px" }}
-              />
+                <input
+                  type="text"
+                  onChange={this.handleChange}
+                  value={result}
+                  style={{ width: "100%", height: "100px" }}
+                />
               </Row>
               <Row>&nbsp;</Row>
               <Row>
