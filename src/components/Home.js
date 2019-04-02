@@ -3,22 +3,9 @@ import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-const styles = theme => ({
-  root: {
-    flexGrow: 1
-  },
-  paper: {
-    padding: theme.spacing.unit * 2,
-    textAlign: "center",
-    color: theme.palette.text.secondary
-  }
-});
-
 class Home extends Component {
   state = {
-    numArray: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, "+", "-", "/", "*"],
-    result: "",
-    inputArray: []
+    result: ""
   };
 
   handleChange = e => {
@@ -29,7 +16,7 @@ class Home extends Component {
 
   handleClick = e => {
     const result = this.state.result;
-    const numList = result.split(/[*/+-]+/).map(e=>parseInt(e));
+    const numList = result.split(/[*/+-]+/).map(e => parseInt(e));
     console.log(numList);
     const operators = result.split(/[\d]+/);
     operators.pop();
@@ -66,7 +53,7 @@ class Home extends Component {
     const { input, result, numArray } = this.state;
     return (
       <>
-        <div style={{ width: "250px", marginLeft: "80px", marginTop: "100px" }}>
+        <div style={{ width: "280px", marginLeft: "80px", marginTop: "100px" }}>
           <Card style={{ backgroundColor: "#ccc", height: "350px" }}>
             <Card.Body>
               <Row>
@@ -79,15 +66,15 @@ class Home extends Component {
               </Row>
               <Row>&nbsp;</Row>
               <Row>
-                <Col lg={6}>
+                <Col lg={8}>
                   <tr>
                     {[0, 1, 2, 3].map(e => (
                       <td>
                         <div
                           style={{
                             border: "1px solid",
-                            padding: "2px 4px",
-                            margin: "2px 4px"
+                            padding: "1px 8px",
+                            margin: "1px 8px"
                           }}
                           onClick={() => this.handleButtonKey(e)}
                         >
@@ -103,8 +90,8 @@ class Home extends Component {
                         <div
                           style={{
                             border: "1px solid",
-                            padding: "2px 4px",
-                            margin: "2px 4px"
+                            padding: "1px 8px",
+                            margin: "1px 8px"
                           }}
                           onClick={() => this.handleButtonKey(e)}
                         >
@@ -119,8 +106,8 @@ class Home extends Component {
                         <div
                           style={{
                             border: "1px solid",
-                            padding: "2px 4px",
-                            margin: "2px 4px"
+                            padding: "1px 8px",
+                            margin: "1px 8px"
                           }}
                           onClick={() => this.handleButtonKey(e)}
                         >
@@ -135,8 +122,8 @@ class Home extends Component {
                         <div
                           style={{
                             border: "1px solid",
-                            padding: "2px 4px",
-                            margin: "2px 4px"
+                            padding: "1px 8px",
+                            margin: "1px 8px"
                           }}
                           onClick={() => this.handleButtonKey(e)}
                         >
