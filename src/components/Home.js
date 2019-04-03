@@ -65,21 +65,22 @@ class Home extends Component {
           break;
       }
     }
-    let result1 = a.pop();
+    console.log(a);
+    let result1 = a.shift();
     while (a.length) {
-      let operator = a.pop();
+      let operator = a.shift();
+      console.log(result1);
       // eslint-disable-next-line default-case
       switch (operator) {
         case "+":
-          result1 = result1 + a.pop();
+          result1 = result1 + a.shift();
           break;
         case "-":
-          result1 = result1 - a.pop();
+          result1 = result1 - a.shift();
           break;
       }
     }
 
-    console.log("dd", a);
     this.setState({
       result: result1
     });
