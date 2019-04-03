@@ -1,7 +1,32 @@
 import React, { Component } from "react";
-import Card from "react-bootstrap/Card";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import { withStyles } from "@material-ui/core/styles";
+import Paper from "@material-ui/core/Paper";
+import Grid from "@material-ui/core/Grid";
+import TextField from "@material-ui/core/TextField";
+const styles = theme => ({
+  root: {
+    flexGrow: 1,
+    paddingTop: theme.spacing.unit*4,
+  },
+  paper: {
+    padding: theme.spacing.unit,
+    textAlign: "center",
+    color: theme.palette.text.secondary
+  }
+});
+
+function FormRow(props) {
+  const { classes, num } = props;
+  return (
+    <React.Fragment>
+      <Grid item xs={3}>
+        <Paper className={classes.paper} square>
+          <div onClick={() => props.handleButtonKey(num)}>{num}</div>
+        </Paper>
+      </Grid>
+    </React.Fragment>
+  );
+}
 
 class Home extends Component {
   state = {
@@ -50,103 +75,87 @@ class Home extends Component {
   };
 
   render() {
-    const { input, result, numArray } = this.state;
+    const { classes } = this.props;
+    const { result } = this.state;
     return (
       <>
-        <div style={{ width: "280px", marginLeft: "80px", marginTop: "100px" }}>
-          <Card style={{ backgroundColor: "#ccc", height: "350px" }}>
-            <Card.Body>
-              <Row>
-                <input
-                  type="text"
-                  onChange={this.handleChange}
+        <div className={classes.root}>
+          <Grid container justify="center">
+            <Grid
+              container
+              xs={3}
+              spacing={24}
+              style={{ backgroundColor: "#ccc" }}
+            >
+              <Grid item xs={12} style={{ marginTop: "5px" }}>
+                <TextField
+                  className={classes.textField}
                   value={result}
-                  style={{ width: "100%", height: "100px" }}
+                  margin="normal"
+                  variant="standard"
+                  fullWidth
+                  onChange={this.handleChange}
                 />
-              </Row>
-              <Row>&nbsp;</Row>
-              <Row>
-                <Col lg={8}>
-                  <tr>
-                    {[0, 1, 2, 3].map(e => (
-                      <td>
-                        <div
-                          style={{
-                            border: "1px solid",
-                            padding: "1px 8px",
-                            margin: "1px 8px"
-                          }}
-                          onClick={() => this.handleButtonKey(e)}
-                        >
-                          {e}
-                        </div>
-                      </td>
-                    ))}
-                  </tr>
+              </Grid>
+              <Grid
+                justify="center"
+                container
+                xs={12}
+                style={{ margin: "0px 2px 2px 2px" }}
+              >
+                <Grid container item xs={12}>
+                  {[0, 1, 2, 3].map(e => (
+                    <FormRow
+                      classes={classes}
+                      key={e}
+                      num={e}
+                      handleButtonKey={this.handleButtonKey}
+                    />
+                  ))}
+                </Grid>
 
-                  <tr>
-                    {[4, 5, 6, 7].map(e => (
-                      <td>
-                        <div
-                          style={{
-                            border: "1px solid",
-                            padding: "1px 8px",
-                            margin: "1px 8px"
-                          }}
-                          onClick={() => this.handleButtonKey(e)}
-                        >
-                          {e}
-                        </div>
-                      </td>
-                    ))}
-                  </tr>
-                  <tr>
-                    {[8, 9, "+", "-"].map(e => (
-                      <td>
-                        <div
-                          style={{
-                            border: "1px solid",
-                            padding: "1px 8px",
-                            margin: "1px 8px"
-                          }}
-                          onClick={() => this.handleButtonKey(e)}
-                        >
-                          {e}
-                        </div>
-                      </td>
-                    ))}
-                  </tr>
-                  <tr>
-                    {["*", "/"].map(e => (
-                      <td>
-                        <div
-                          style={{
-                            border: "1px solid",
-                            padding: "1px 8px",
-                            margin: "1px 8px"
-                          }}
-                          onClick={() => this.handleButtonKey(e)}
-                        >
-                          {e}
-                        </div>
-                      </td>
-                    ))}
-                  </tr>
-                </Col>
-                <Col>
-                  <button
-                    onClick={this.handleClick}
-                    style={{ width: "100%", height: "150px" }}
-                  >
-                    =
-                  </button>
-                </Col>
-              </Row>
-            </Card.Body>
-          </Card>
+                <Grid container item xs={12}>
+                  {[4, 5, 6, 7].map(e => (
+                    <FormRow
+                      classes={classes}
+                      key={e}
+                      handleButtonKey={this.handleButtonKey}
+                      num={e}
+                    />
+                  ))}
+                </Grid>
+                <Grid container item xs={12}>
+                  {[8, 9, "+", "-"].map(e => (
+                    <FormRow
+                      classes={classes}
+                      key={e}
+                      num={e}
+                      handleButtonKey={this.handleButtonKey}
+                    />
+                  ))}
+                </Grid>
+
+                <Grid container item xs={12}>
+                  {["*", "/"].map(e => (
+                    <FormRow
+                      classes={classes}
+                      key={e}
+                      num={e}
+                      handleButtonKey={this.handleButtonKey}
+                    />
+                  ))}
+                  <Grid item xs={6}>
+                    <Paper className={classes.paper} square style={{backgroundColor:'gold'}}>
+                      <div onClick={() => this.handleClick("=")}>{"="}</div>
+                    </Paper>
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Grid>
+          </Grid>
         </div>
       </>
     );
   }
 }
-export default Home;
+export default withStyles(styles)(Home);
