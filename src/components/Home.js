@@ -6,7 +6,7 @@ import TextField from "@material-ui/core/TextField";
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    paddingTop: theme.spacing.unit*4,
+    paddingTop: theme.spacing.unit * 4
   },
   paper: {
     padding: theme.spacing.unit,
@@ -40,30 +40,46 @@ class Home extends Component {
   };
 
   handleClick = e => {
-    const result = this.state.result;
+    let result = this.state.result;
     const numList = result.split(/[*/+-]+/).map(e => parseInt(e));
-    console.log(numList);
     const operators = result.split(/[\d]+/);
     operators.pop();
     operators.shift();
-    let result1 = numList[0];
+    let a = [numList[0]];
     for (let i = 0; i < operators.length; i++) {
       // eslint-disable-next-line default-case
       switch (operators[i]) {
         case "+":
-          result1 = result1 + numList[i + 1];
+          a.push("+");
+          a.push(numList[i + 1]);
           break;
         case "*":
-          result1 = result1 * numList[i + 1];
+          a.push(a.pop() * numList[i + 1]);
           break;
         case "/":
-          result1 = result1 / numList[i + 1];
+          a.push(a.pop() / numList[i + 1]);
           break;
         case "-":
-          result1 = result1 - numList[i + 1];
+          a.push("-");
+          a.push(numList[i + 1]);
           break;
       }
     }
+    let result1 = a.pop();
+    while (a.length) {
+      let operator = a.pop();
+      // eslint-disable-next-line default-case
+      switch (operator) {
+        case "+":
+          result1 = result1 + a.pop();
+          break;
+        case "-":
+          result1 = result1 - a.pop();
+          break;
+      }
+    }
+
+    console.log("dd", a);
     this.setState({
       result: result1
     });
@@ -80,13 +96,8 @@ class Home extends Component {
     return (
       <>
         <div className={classes.root}>
-          <Grid container justify="center">
-            <Grid
-              container
-              xs={3}
-              spacing={24}
-              style={{ backgroundColor: "#ccc" }}
-            >
+          <Grid container justify="center" spacing={16}>
+            <Grid item xs={3} style={{ backgroundColor: "#ccc" }}>
               <Grid item xs={12} style={{ marginTop: "5px" }}>
                 <TextField
                   className={classes.textField}
@@ -97,12 +108,7 @@ class Home extends Component {
                   onChange={this.handleChange}
                 />
               </Grid>
-              <Grid
-                justify="center"
-                container
-                xs={12}
-                style={{ margin: "0px 2px 2px 2px" }}
-              >
+              <Grid justify="center" container>
                 <Grid container item xs={12}>
                   {[0, 1, 2, 3].map(e => (
                     <FormRow
@@ -145,7 +151,11 @@ class Home extends Component {
                     />
                   ))}
                   <Grid item xs={6}>
-                    <Paper className={classes.paper} square style={{backgroundColor:'gold'}}>
+                    <Paper
+                      className={classes.paper}
+                      square
+                      style={{ backgroundColor: "gold" }}
+                    >
                       <div onClick={() => this.handleClick("=")}>{"="}</div>
                     </Paper>
                   </Grid>
